@@ -8,7 +8,7 @@ module.exports = {
     screens: {
       'mobile': '0px',
       // => @media (min-width: 320px) { ... }
-
+      
       'tablet': '640px',
       // => @media (min-width: 640px) { ... }
 
@@ -28,6 +28,9 @@ module.exports = {
       maxWidth: {
         'page': '1536px',
         'prodBox': '220px',
+      },
+      height: {
+        'desktopBanner': '500px'
       }
     },
   },

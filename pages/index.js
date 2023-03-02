@@ -1,3 +1,4 @@
+import Banner from "../components/Home/banner"
 import TopProducts from "../components/Home/TopProducts/TopProducts"
 
 
@@ -77,10 +78,7 @@ export default function Home(props) {
 	const { top_products:topProducts} = props
 	return (
 		<div>
-			<img
-				className="w-full h-96 object-cover"
-				src="https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/6zhGBKQpPrlLNI2a7EfALNs1.png?w=1920&thumb=false" 
-			/>
+			<Banner />
 			<div className="pt-4">
 				<TopProducts products={freeProducts} title={"JUEGOS GRATUITOS"}/>
 			</div>

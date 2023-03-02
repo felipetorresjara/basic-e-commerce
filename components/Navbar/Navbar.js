@@ -1,9 +1,9 @@
-import { SearchIcon, MenuIcon, ChevronDownIcon} from '@heroicons/react/solid'
+import { SearchIcon, MenuIcon, ChevronDownIcon, ChevronRightIcon} from '@heroicons/react/solid'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { categories, popularGames } from '../../lib/consts'
-import PSNLOGO from '../../public/images/logos/ps-logo.png'
+import { categories, contentMenu, popularGames } from '../../lib/consts'
+import MenuContent from './MenuContent'
 
 export default function NavBar() {
     const router = useRouter()
@@ -54,12 +54,35 @@ export default function NavBar() {
                     </div>
                 </div>
             </div>
-            <nav className='h-12 bg-white flex relative px-2'>
+            <nav className='h-12 bg-white flex relative px-2 pt-2'>
                 <div className='max-w-page m-auto flex w-full items-center h-full'>
-                    <div className='bg-secondary text-white flex p-2 mt-2 items-center h-10 rounded-t betterhover:cursor-pointer'>
-                        <MenuIcon className="h-6 w-6 mr-4 cursor-pointer"/>
-                        <div className='text-white'>Categorias</div>
-                        <ChevronDownIcon className="h-6 w-6 mr-4 cursor-pointer"/>
+                    <div className='relative w-1/6'>
+                        <div
+                            onClick={()=> handleNavigation('category')}
+                            className='bg-secondary text-white flex p-2 w-full items-center h-10 rounded-t betterhover:cursor-pointer'
+                        >
+                            <MenuIcon className="h-6 w-6 mr-4 cursor-pointer"/>
+                            <div className='text-white'>Categorias</div>
+                        
+                        </div>
+                        {open.open && open.type === 'category' &&
+                        <div className='absolute top-10 h-max bg-white w-full inset-0 text-black py-2 rounded-b drop-shadow-xl'>
+                            {
+                                Object.keys(categories).map((key, index) => 
+                                    <div key={categories[key]}>
+                                        <div
+                                            className={`px-4 py-1 flex justify-between hover:text-white betterhover:cursor-pointer hover:bg-secondary border-bottom ${index !== Object.keys(categories).length -1 && 'border-b border-gray-300'}`}
+                                        >
+                                            <p>
+                                                {categories[key]}
+                                            </p>
+                                            <ChevronRightIcon className="h-6 w-6 m-0 cursor-pointer"/>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    }
                     </div>
                     <div
                         onClick={()=> handleNavigation('psn')}
@@ -88,60 +111,14 @@ export default function NavBar() {
                     >
                         Acerca de
                     </div>
-                    {open.open &&
-                        <div className='absolute top-12 h-52 bg-white w-full inset-0 border-t-2 drop-shadow-xl'>
-                            <div className='max-w-page m-auto flex'>
-                                <div className='pr-24'>
-                                    <p className='font-semibold'>
-                                        Juegos populares
-                                    </p>
-                                    {
-                                        popularGames.map((game, index)=>
-                                            <Link href={`/product/${game.id}`} legacyBehavior>
-                                                <a className='block py-1 betterhover:hover:text-secondary'>
-                                                {game.name}
-                                                </a>
-                                            </Link>
-                                        )
-                                    }
-                                </div>
-                                <div className='pr-24'>
-                                    <p className='font-semibold'>
-                                        Top generos
-                                    </p>
-                                    {
-                                        Object.keys(categories).slice(0,5).map((key, index)=>
-                                            <Link href={`/listing?category=${key}`} legacyBehavior>
-                                                <a className='block py-1 betterhover:hover:text-secondary'>
-                                                {categories[key]}
-                                                </a>
-                                            </Link>
-                                        )
-                                    }
-                                </div>
-                                <div className='pr-24'>
-                                    <p className='font-semibold'>
-                                        Top generos
-                                    </p>
-                                    {
-                                        Object.keys(categories).slice(0,5).map((key, index)=>
-                                            <Link href={`/listing?category=${key}`} legacyBehavior>
-                                                <a className='block py-1 betterhover:hover:text-secondary'>
-                                                {categories[key]}
-                                                </a>
-                                            </Link>
-                                        )
-                                    }
-                                </div>
-                                <div className='flex items-center'>
-                                    <img
-                                        className='h-24'
-                                        src={PSNLOGO.src}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-    }               </div>
+                    {open.open && open.type !== 'about' && open.type !== 'category'  &&
+                        <MenuContent
+                            popularGames={contentMenu[open.type].topGames}
+                            topCategories={contentMenu[open.type].topCategories}
+                            logo={contentMenu[open.type].logo}
+                        />
+                    }
+                </div>
             </nav>
         </header>
     )

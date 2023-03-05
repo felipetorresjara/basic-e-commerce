@@ -9,17 +9,17 @@ export default function Banner(){
             <div className="col-span-12 desktop:col-span-7">
                 <img
                     src={PSBANNER.src}
-                    className="h-96 w-full desktop:h-desktopBanner object-fill rounded betterhover:cursor-pointer"
+                    className="tablet:h-72 w-full desktop:h-desktopBanner object-fill rounded betterhover:cursor-pointer"
                 />
             </div>
             <div className="col-span-12 grid grid-cols-2 gap-2 tablet:gap-4 desktop:block desktop:col-span-5">
                 <img
                     src={XBOXBANNER.src}
-                    className="h-60 object-cover w-full rounded mb-4 betterhover:cursor-pointer"
+                    className="h-40 tablet:h-52 desktop:h-60 object-cover w-full rounded mb-4 betterhover:cursor-pointer"
                 />
                 <img
                     src={NINTENDOBANNER.src}
-                    className="h-60 object-cover rounded betterhover:cursor-pointer"
+                    className="h-40 tablet:h-52 desktop:h-60 object-cover rounded betterhover:cursor-pointer"
                 />
             </div>
         </div>

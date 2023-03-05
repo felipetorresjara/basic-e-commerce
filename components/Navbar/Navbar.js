@@ -1,14 +1,36 @@
 import { SearchIcon, MenuIcon, ChevronDownIcon, ChevronRightIcon} from '@heroicons/react/solid'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { categories, contentMenu, popularGames } from '../../lib/consts'
+import { useEffect, useRef, useState } from 'react'
+import { categories, contentMenu } from '../../lib/consts'
+import CategoryMenu from './CategoryMenu'
 import MenuContent from './MenuContent'
+import STORELOGO from '../../public/images/logos/store-logo.png'
+import CategoryMenuMobile from './CategoryMenuMobile'
 
 export default function NavBar() {
     const router = useRouter()
     const [query, setQuery] = useState(router.query.search)
     const [open, setOpen] = useState({open: false})
+    const [openCatMenu, setOpenCatMenu] = useState(false)
+    const menuRef = useRef(null)
+    const hoverMenuRef = useRef(null)
+
+    useEffect(
+        () => {
+          const listener = (event) => {
+            if (hoverMenuRef.current && !hoverMenuRef.current.contains(event.target)) {
+              setOpen({open:false});
+            }
+          };
+          document.addEventListener("mouseover", listener);
+          return () => {
+            document.removeEventListener("mouseout", listener);
+          };
+        },
+        [hoverMenuRef]
+    );
+
     const handleClick = (e) => {
         if(e.keyCode === 13){
             e.target.value !== '' ?
@@ -19,20 +41,31 @@ export default function NavBar() {
     }
 
     const handleNavigation = (type) =>{
-        open.type == type ?
-            setOpen({open:!open.open, type: !open.open ? type : undefined})
-        :
             setOpen({open:true, type:type})
     }
+ 
     return(
-        <header className='sticky top-0 z-50 bg-background'>
-            <div className='max-w-page m-auto'>
-                <div className="w-full flex gap-2 py-4">
+        <header className='sticky top-0 z-50 bg-background border-b border-b-black drop-shadow-lg'>
+            <div className='max-w-page mobile:h-16 desktop:h-20 m-auto relative'>
+                <div className="w-full flex items-center gap-2 py-2 px-4">
+                    <div ref={menuRef}>
+                        <MenuIcon
+                            className="desktop:hidden h-8 w-8 mr-4 cursor-pointer text-white"
+                            onClick={()=> setOpenCatMenu(!openCatMenu)}
+                        />
+                        <CategoryMenuMobile
+                            openCatMenu={openCatMenu}
+                            setOpenCatMenu={setOpenCatMenu}
+                            categories={categories}
+                            menuRef={menuRef}
+                        />
+                    </div>                
                     <Link href="/" legacyBehavior>
                         <a className='cursor-none'>
-                            <div className="text-white text-5xl pl-2 betterhover:hover:cursor-pointer">
-                                Logo
-                            </div>
+                            <img
+                                src={STORELOGO.src}
+                                className="betterhover:hover:cursor-pointer mobile:h-14 mobile:w-16 desktop:w-24 desktop:h-16"
+                            />
                         </a>
                     </Link>
                     <div className='grid grid-cols-12 w-full pl-4'>
@@ -54,64 +87,44 @@ export default function NavBar() {
                     </div>
                 </div>
             </div>
-            <nav className='h-12 bg-white flex relative px-2 pt-2'>
-                <div className='max-w-page m-auto flex w-full items-center h-full'>
-                    <div className='relative w-1/6'>
+            <nav className='hidden h-10 bg-white desktop:flex relative px-2'>
+                <div ref={hoverMenuRef} className='max-w-page w-max flex items-center h-full'>
+                    <div className='relative h-full'>
                         <div
-                            onClick={()=> handleNavigation('category')}
-                            className='bg-secondary text-white flex p-2 w-full items-center h-10 rounded-t betterhover:cursor-pointer'
+                            onMouseOver={()=> handleNavigation('category')}
+                            className={`text-center h-full flex items-center px-4 m-0 betterhover:cursor-pointer ${open.type === 'category' && "border-b-4 border-secondary"}`}
+
                         >
-                            <MenuIcon className="h-6 w-6 mr-4 cursor-pointer"/>
-                            <div className='text-white'>Categorias</div>
+                            <div>Categorias</div>
+                            <ChevronDownIcon className="h-6 w-6 mr-4 cursor-pointer"/>
                         
                         </div>
                         {open.open && open.type === 'category' &&
-                        <div className='absolute top-10 h-max bg-white w-full inset-0 text-black py-2 rounded-b drop-shadow-xl'>
-                            {
-                                Object.keys(categories).map((key, index) => 
-                                    <div key={categories[key]}>
-                                        <div
-                                            className={`px-4 py-1 flex justify-between hover:text-white betterhover:cursor-pointer hover:bg-secondary border-bottom ${index !== Object.keys(categories).length -1 && 'border-b border-gray-300'}`}
-                                        >
-                                            <p>
-                                                {categories[key]}
-                                            </p>
-                                            <ChevronRightIcon className="h-6 w-6 m-0 cursor-pointer"/>
-                                        </div>
-                                    </div>
-                                )
-                            }
-                        </div>
+                            <CategoryMenu categories={categories}/>
                     }
                     </div>
                     <div
-                        onClick={()=> handleNavigation('psn')}
-                        className={`text-center h-full flex items-center px-4 betterhover:cursor-pointer ${open.type === 'psn' && "border-b-4 border-secondary"}`}
+                        onMouseOver={()=> handleNavigation('psn')}
+                        className={`text-center h-full flex items-center px-4 m-0 betterhover:cursor-pointer ${open.type === 'psn' && "border-b-4 border-secondary"}`}
                     >
                         PSN
                         <ChevronDownIcon className="h-6 w-6 mr-4 cursor-pointer"/>
                     </div>
                     <div 
-                        onClick={()=> handleNavigation('xbox')}
-                        className={`text-center h-full flex items-center px-4 betterhover:cursor-pointer ${open.type === 'xbox' && "border-b-4 border-secondary"}`}
+                        onMouseOver={()=> handleNavigation('xbox')}
+                        className={`text-center h-full flex items-center px-4 m-0 betterhover:cursor-pointer ${open.type === 'xbox' && "border-b-4 border-secondary"}`}
                         >
                         XBOX
                         <ChevronDownIcon className="h-6 w-6 mr-4 cursor-pointer"/>
                     </div>
                     <div
-                        onClick={()=> handleNavigation('nintendo')}
-                        className={`text-center h-full flex items-center px-4 betterhover:cursor-pointer ${open.type === 'nintendo' && "border-b-4 border-secondary"}`}
+                        onMouseOver={()=> handleNavigation('nintendo')}
+                        className={`text-center h-full flex items-center px-4 m-0 betterhover:cursor-pointer ${open.type === 'nintendo' && "border-b-4 bg-seco border-secondary"}`}
                     >
                         NINTENDO
                         <ChevronDownIcon className="h-6 w-6 mr-4 cursor-pointer"/>
                     </div>
-                    <div
-                        onClick={()=> handleNavigation('about')}
-                        className={`text-center h-full flex items-center ${open.type === 'about' && "border-b-4 border-secondary"} px-4 betterhover:cursor-pointer`}
-                    >
-                        Acerca de
-                    </div>
-                    {open.open && open.type !== 'about' && open.type !== 'category'  &&
+                    {open.open && open.type !== 'category'  &&
                         <MenuContent
                             popularGames={contentMenu[open.type].topGames}
                             topCategories={contentMenu[open.type].topCategories}

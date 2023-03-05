@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
 		<div className="w-full bg-background min-h-screen">
 			<NavBar />
 			<main className="flex justify-center">
-				<div className="max-w-page grow">
+				<div className="max-w-page grow pb-4">
 					<Component {...pageProps} />
 				</div>
 			</main>

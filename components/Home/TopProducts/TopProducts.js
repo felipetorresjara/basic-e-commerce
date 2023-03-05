@@ -15,7 +15,7 @@ export default function TopProducts(props){
                         <p className="text-center text-primary line-clamp-2 px-2 h-11">{product.name}</p>
                         <p className="text-center text-black font-semibold">Precio</p>
                         <div className="bg-secondary text-center text-white">
-                            {product.price === 0 ? 'gratis' : `$ ${product.price}`}
+                            {product.price === 0 ? 'Gratis' : `$ ${product.price}`}
                         </div>
                     </div>
                 )

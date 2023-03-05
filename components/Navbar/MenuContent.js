@@ -4,7 +4,7 @@ import React from "react";
 export default function MenuContent(props){
     const { popularGames, topCategories, logo} = props
     return(
-        <div className='absolute top-12 h-52 bg-white w-full inset-0 border-t-2 drop-shadow-xl'>
+        <div className='absolute top-10 h-52 bg-white w-full inset-0 border-t-2 drop-shadow-xl px-2'>
             <div className='max-w-page m-auto flex'>
                 <div className='pr-24'>
                     <p className='font-semibold'>

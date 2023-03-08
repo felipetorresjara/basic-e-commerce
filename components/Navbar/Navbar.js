@@ -1,4 +1,4 @@
-import { SearchIcon, MenuIcon, ChevronDownIcon, ChevronRightIcon} from '@heroicons/react/solid'
+import { SearchIcon, MenuIcon, ChevronDownIcon, UserCircleIcon} from '@heroicons/react/solid'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -69,7 +69,7 @@ export default function NavBar() {
                         </a>
                     </Link>
                     <div className='grid grid-cols-12 w-full pl-4'>
-                        <div className="mobile:col-span-6 desktop:col-span-7">
+                        <div className="mobile:col-span-10 tablet:col-span-7">
                             <div className="flex items-center justify-between border border-white rounded-full pl-2 py-2">
                                 <input
                                     className="w-11/12 outline-none bg-transparent text-white placeholder-white"
@@ -83,6 +83,9 @@ export default function NavBar() {
                                     onClick={() => router.push(`/listing${query !== undefined ? `?search=${query}` : ''}`)}
                                 />
                             </div>
+                        </div>
+                        <div className='col-span-2 tablet:col-span-5 flex justify-end items-center'>
+                            <UserCircleIcon className="h-10 w-10 ml-2  cursor-pointer text-white"/>
                         </div>
                     </div>
                 </div>

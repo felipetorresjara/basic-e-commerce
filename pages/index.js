@@ -1,3 +1,4 @@
+import LazyLoad from "react-lazyload"
 import Banner from "../components/Home/banner"
 import TopProducts from "../components/Home/TopProducts/TopProducts"
 
@@ -80,11 +81,33 @@ export default function Home(props) {
 		<div>
 			<Banner />
 			<div className="pt-4">
-				<TopProducts products={freeProducts} title={"JUEGOS GRATUITOS"}/>
+				<TopProducts products={freeProducts} title={"Juegos Gratuitos"}/>
 			</div>
-			{/* <div className="pt-4">
-				<TopProducts products={topProducts} title="PRODUCTOS TOP"/>
-			</div> */}
+			<div className="mt-8">
+				<div className="bg-secondary text-white font-bold text-2xl w-80 text-right pr-10 mb-2">
+					Tiendas Disponibles
+				</div>
+				<div className="grid mobile:grid-cols-2 tablet:grid-cols-3 desktop:grid-cols-3 gap-4 px-5 items-center">
+					<LazyLoad height={240} offset={100}>
+                        <img
+                            className="w-full h-40 object-fill"
+                            src={'https://cdn.eneba.com/branding/v2/logoFull.svg'} 
+                        />
+                    </LazyLoad>
+					<LazyLoad height={240} offset={100}>
+                        <img
+                            className="w-full h-40 object-contain"
+                            src={'https://upload.wikimedia.org/wikipedia/commons/a/a7/Epic_Games_logo.png'} 
+                        />
+                    </LazyLoad>
+					<LazyLoad height={240} offset={100}>
+                        <img
+                            className="w-full h-40 object-fill"
+                            src={'https://store.akamai.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016'} 
+                        />
+                    </LazyLoad>
+				</div>
+			</div>
 		</div>
 	)
 }

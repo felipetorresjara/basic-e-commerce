@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import Footer from '../components/Footer/Footer'
 import NavBar from '../components/Navbar/Navbar'
 import '../styles/globals.css'
 
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }) {
 					<Component {...pageProps} />
 				</div>
 			</main>
+			<Footer />
 		</div>
 	)
 }

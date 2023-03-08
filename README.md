@@ -6,7 +6,7 @@
 [![Tailwindcss](https://img.shields.io/badge/Tailwindcss-3.2.7-blue)](https://tailwindcss.com/docs/guides/nextjs)
 
 
-<a href="./preview.png"><img src="./preview.png" style="height: 50%; width:50%;"/></a>
+<a href="./preview.png"><img src="./preview.png" style="width:100%;"/></a>
 
 
 ## Instalación

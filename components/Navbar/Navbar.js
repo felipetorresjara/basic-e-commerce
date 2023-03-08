@@ -64,7 +64,7 @@ export default function NavBar() {
                         <a className='cursor-none'>
                             <img
                                 src={STORELOGO.src}
-                                className="betterhover:hover:cursor-pointer mobile:h-14 mobile:w-16 desktop:w-24 desktop:h-16"
+                                className="betterhover:hover:cursor-pointer mobile:h-14 mobile:w-16 desktop:w-24 desktop:h-16 object-contain"
                             />
                         </a>
                     </Link>
